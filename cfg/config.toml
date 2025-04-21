@@ -1,6 +1,8 @@
 [repos]
 
 general = 'https://github.com/ansible-collections/community.general.git'
+proxmox_upstream = 'https://github.com/ansible-collections/community.proxmox.git'
+proxmox_origin = 'git@github.com:WaitingAtTheCrossroads/community.proxmox.git'
 
 files = [
   '.github/',

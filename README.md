@@ -11,6 +11,10 @@ separate to avoid polluting those source trees.
 
 See `./src/main.py --help`.
 
+To run all steps, including merge and push:
+
+`./src/main.py --merge --push --force`
+
 <!-- lilnks -->
 
 [github-general]: (https://github.com/ansible-collections/community.general.git)

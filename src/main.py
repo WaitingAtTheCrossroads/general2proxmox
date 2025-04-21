@@ -16,6 +16,12 @@ community.general to community.proxmox.  The approach is:
 
 - Pass the configured file list plus the discovered renames to `git filter-repo`
   with a `repo-filter.txt` file that gets written to disk.
+
+- Optionally merge existing, filtered `community.general` repository
+  (`main-general` branch) in to new `community.proxmox` template repo (`main`
+  branch), accepting all incoming changes that may create merge conflicts.
+
+- Optionally push to new repository.
 """
 
 from argparse import ArgumentParser
@@ -63,8 +69,22 @@ class Program:
         )
 
         parser.add_argument(
-            "--force-push",
-            help="Force push new repository",
+            "--force",
+            help="Force push to new repository",
+            default=False,
+            action="store_true",
+        )
+
+        parser.add_argument(
+            "--merge",
+            help="Merge filtered repository",
+            default=False,
+            action="store_true",
+        )
+
+        parser.add_argument(
+            "--push",
+            help="Push merged repository",
             default=False,
             action="store_true",
         )
@@ -164,6 +184,79 @@ class Program:
             ["git", "filter-repo", "--paths-from-file", join("..", "repo-filter.txt")],
             check=True,
         )
+
+        if self.args.merge:
+            self._subprocess_run(
+                [
+                    "git",
+                    "remote",
+                    "add",
+                    "upstream",
+                    self.config["repos"]["proxmox_upstream"],
+                ],
+                check=True,
+            )
+
+            self._subprocess_run(["git", "fetch", "upstream"], check=True)
+
+            self._subprocess_run(
+                ["git", "checkout", "-b", "main-upstream", "upstream/main"], check=True
+            )
+
+            self._subprocess_run(
+                ["git", "branch", "-m", "main", "main-general"], check=True
+            )
+
+            self._subprocess_run(
+                ["git", "branch", "-m", "main-upstream", "main"], check=True
+            )
+
+            self._subprocess_run(
+                [
+                    "git",
+                    "merge",
+                    "main-general",
+                    "--allow-unrelated-histories",
+                    "--no-ff",
+                    "--no-edit",
+                    "--strategy-option",
+                    "theirs",
+                ],
+                check=True,
+            )
+
+        if self.args.push:
+            self._subprocess_run(
+                [
+                    "git",
+                    "remote",
+                    "add",
+                    "origin",
+                    self.config["repos"]["proxmox_origin"],
+                ],
+                check=True,
+            )
+
+            cmd: list[str] = [
+                "git",
+                "push",
+                "origin",
+            ]
+
+            args: list[str] = [
+                '--branches',
+                '--tags',
+                '--prune',
+            ]
+
+            for arg in args:
+                this_cmd = cmd.copy()
+                this_cmd.append(arg)
+
+                if self.args.force:
+                    this_cmd.append("--force")
+
+                self._subprocess_run(this_cmd, check=True)
 
 
 def main():
