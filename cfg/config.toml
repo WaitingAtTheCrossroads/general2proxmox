@@ -33,6 +33,7 @@ files = [
   'plugins/modules/proxmox.py',
 
   # glob seems to not actually follow renames...?
+  'tests/integration/targets/connection_proxmox_pct_remote/',
   'tests/integration/targets/proxmox*',
   'tests/integration/targets/proxmox/',
   'tests/integration/targets/proxmox_pool/',
