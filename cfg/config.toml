@@ -5,20 +5,6 @@ proxmox_upstream = 'https://github.com/ansible-collections/community.proxmox.git
 proxmox_origin = 'git@github.com:WaitingAtTheCrossroads/community.proxmox.git'
 
 files = [
-  '.github/',
-
-  'changelogs/.gitignore',
-  'changelogs/changelog.yaml.license',
-  'changelogs/config.yaml',
-  'changelogs/fragments/.keep',
-
-  'docs/docsite/config.yml',
-  'docs/docsite/links.yml',
-
-  'LICENSES/',
-
-  'meta/runtime.yml',
-
   'plugins/connection/proxmox_pct_remote.py',
   'plugins/doc_fragments/proxmox.py',
   'plugins/inventory/proxmox.py',
@@ -52,15 +38,6 @@ files = [
   'tests/integration/targets/proxmox_pool/',
   'tests/integration/targets/proxmox_template/',
 
-  # Randomly checking a few community.* repos showed most do not have something
-  # similar, but at least one (docker) did.
-  'tests/sanity/extra/',
-
-  'tests/sanity/ignore-2.15.txt',
-  'tests/sanity/ignore-2.15.txt.license',
-  'tests/sanity/ignore-2.16.txt',
-  'tests/sanity/ignore-2.16.txt.license',
-
   'tests/unit/plugins/connection/test_proxmox_pct_remote.py',
   'tests/unit/plugins/inventory/test_proxmox.py',
 
@@ -74,24 +51,6 @@ files = [
   'tests/unit/plugins/modules/test_proxmox_tasks_info.py',
   'tests/unit/plugins/modules/test_proxmox_template.py',
   'tests/unit/plugins/modules/test_proxmox_vm_info.py',
-
-  'tests/unit/requirements.txt',
-  'tests/unit/requirements.yml',
-
-  'tests/.gitignore',
-  'tests/config.yml',
-
-  '.gitignore',
-  'CHANGELOG.md',
-  'CHANGELOG.md.license',
-  'CHANGELOG.rst',
-  'CHANGELOG.rst.license',
-  'commit-rights.md',
-  'CONTRIBUTING.md',
-  'COPYING',
-  'galaxy.yml',
-  'README.md',
-  'REUSE.toml',
 ]
 
 # I'm pretty sure git picked up renames when unrelated files with the same
